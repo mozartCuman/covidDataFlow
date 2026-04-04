@@ -1,0 +1,99 @@
+
+
+
+
+
+
+Pipeline de Dados COVID
+Objetivo
+Construir um pipeline que:
+- Coleta dados de COVID de uma fonte pública (ex.: Our World in Data (ourworldindata.org in Bing) ou Ministério da Saúde - Brasil (covid.saude.gov.br in Bing)).
+- Transforma os dados (limpeza, padronização de colunas, cálculo de métricas como média móvel).
+- Armazena em um banco de dados relacional (PostgreSQL).
+- Disponibiliza insights via consultas SQL ou dashboard (Power BI / Streamlit).
+
+===============================
+      Pipeline de Dados COVID
+===============================
+
+1. Fonte de Dados
+
+   - Disease.sh API
+     - URL: https://disease.sh/v3/covid-19/countries/brazil?strict=true
+   
+        |
+        v
+
+2. Ingestão (API)
+   <<Python Script>>
+   - Ferramentas: Python, Requests 
+   - Função: Coleta de dados via API pública
+
+        |
+        v
+
+3. Transformação ETL
+   <<ETL>>
+   - Ferramentas: Pandas, SQLAlchemy
+   - Função: Limpeza, normalização, enriquecimento dos dados
+   - Exemplos:
+     - Remoção de nulos
+     - Cálculo de média móvel
+     - Padronização de datas e nomes de regiões
+
+        |
+        v
+
+4. Banco de Dados
+   <<Database>>
+   - Tecnologia: PostgreSQL
+   - Função: Armazenamento estruturado dos dados tratados
+   - Tabelas:
+     - casos_covid
+     - vacinacao
+     - regioes
+
+        |
+        v
+
+5. Visualização
+   <<Dashboard>>
+   - Ferramentas: Power BI / Streamlit
+   - Função: Geração de gráficos, relatórios e insights
+   - Exemplos:
+     - Evolução de casos por estado
+     - Taxa de vacinação por faixa etária
+     - Comparativo entre regiões
+
+===============================
+      Fluxo de Processamento
+===============================
+
+1. Coleta de Dados
+   - API Retrieval
+
+2. Processamento de Dados
+   - Data Cleaning & Transformation
+
+3. Carga no Banco
+   - Load to PostgreSQL Database
+
+4. Consulta & Visualização
+   - SQL Queries & Interactive Dashboards
+
+
+
+Links úteis para NotebookLM
+Ferramenta do Google para organizar e explorar dados para documentar e testar o projeto.
+links de datasets:
+
+- Our World in Data - COVID-19 Dataset (github.com in Bing)
+
+- COVID-19 Brasil - Dados Oficiais (covid.saude.gov.br in Bing)
+
+- Kaggle – COVID-19 Open Dataset
+https://www.kaggle.com/datasets/imdevskp/corona-virus-report (kaggle.com in Bing)
+
+- Johns Hopkins University – COVID-19 Data Repository
+https://github.com/CSSEGISandData/COVID-19 (github.com in Bing)
+
