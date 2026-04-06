@@ -1,6 +1,7 @@
 from ingestion import Coleta
 import matplotlib.pyplot as plt
 
+
 casos = Coleta.casos
 mortes = Coleta.mortes
 recuperados = Coleta.recuperados

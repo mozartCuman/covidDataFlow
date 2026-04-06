@@ -1,0 +1,48 @@
+Query de criação do BDD no pgAdmin4
+
+Type "help" for help.
+
+covid_data=# CREATE TABLE dados_covid(
+covid_data(# id SERIAL PRIMARY KEY,
+covid_data(# nome VARCHAR(50) NOT NULL,
+covid_data(# valor TEXT NOT NULL,
+covid_data(# data_insercao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+covid_data(# );
+CREATE TABLE
+covid_data=# \dt
+             List of tables
+ Schema |    Name     | Type  |  Owner
+--------+-------------+-------+----------
+ public | dados_covid | table | postgres
+(1 row)
+
+
+covid_data=# \d dados_covid
+                                          Table "public.dados_covid"
+    Column     |            Type             | Collation | Nullable |
+              Default
+---------------+-----------------------------+-----------+----------+---
+--------------------------------------
+ id            | integer                     |           | not null | ne
+xtval('dados_covid_id_seq'::regclass)
+ nome          | character varying(50)       |           | not null |
+ valor         | text                        |           | not null |
+ data_insercao | timestamp without time zone |           |          | CU
+RRENT_TIMESTAMP
+Indexes:
+    "dados_covid_pkey" PRIMARY KEY, btree (id)
+
+
+covid_data=# INSERT INTO dados_covid (nome, valor)
+covid_data-# VALUES ('casos', '100 pessoas foram infectadas.');
+INSERT 0 1
+covid_data=# SELECT * FROM dados_covid;
+ id | nome  |             valor             |       data_insercao
+
+----+-------+-------------------------------+---------------------------
+-
+  1 | casos | 100 pessoas foram infectadas. | 2026-04-05 18:14:29.443402
+(1 row)
+
+
+covid_data=#
