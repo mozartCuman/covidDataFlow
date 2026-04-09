@@ -29,8 +29,9 @@
 - **Técnicas aplicadas**:  
   - Criação de conexão com `create_engine`.  
   - Teste de conexão com `text("SELECT current_database();")`.  
-  - Inserção automática dos dados com `df.to_sql()`.  
-  - Ajustes de encoding para evitar erros de `UnicodeDecodeError`.  
+  - Inserção automática dos dados com `INSERT INTO ... ON CONFLICT DO NOTHING`.  
+  - Criação das tabelas `continentes`, `paises` e `dados_covid` com chaves estrangeiras.  
+  - Pipeline completo: coleta → transformação → persistência.  
 
 ---
 
@@ -63,3 +64,10 @@
 - Mudança de comportamento no **SQLAlchemy 2.0**, que não aceita mais strings diretas em `conn.execute()`, exigindo o uso de `text()`.  
 - Necessidade de recriar senha e revisar credenciais para evitar problemas de compatibilidade.  
 - Ajustes na integração entre DataFrame e banco para garantir que os dados com acentos fossem gravados corretamente.  
+- **Novo desafio**:  
+  - Execução incorreta dos comandos SQL em bloco único no psql, causando erro de “relação não existe”.  
+  - Solução: rodar cada `CREATE TABLE` separadamente com ponto e vírgula.  
+  - Verificação com `SELECT` mostrou tabelas criadas mas vazias, confirmando que faltava rodar o script Python para inserir os dados.  
+  - Após rodar o script, dados foram populados com sucesso e a estrutura relacional validada.  
+
+---
