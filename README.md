@@ -18,9 +18,7 @@
   - Criação de dicionário com frases descritivas.  
   - Uso de f-strings para combinar números e texto.  
   - Iteração com `.items()` para imprimir resultados formatados.  
-  - Visualização com gráfico de barras (`plt.bar`) em duas abordagens:  
-    - Extraindo números das frases com `split()`.  
-    - Usando diretamente as variáveis numéricas.  
+  - Visualização com gráfico de barras (`plt.bar`) em duas abordagens.  
   - Customização de cores e rótulos nos gráficos.  
 
 ### 3. Banco de Dados (BDD)
@@ -33,29 +31,56 @@
   - Criação das tabelas `continentes`, `paises` e `dados_covid` com chaves estrangeiras.  
   - Pipeline completo: coleta → transformação → persistência.  
 
+### 4. API (FastAPI)
+- **Ferramenta**: FastAPI + Uvicorn  
+- **Função**: Expor os dados do banco em rotas REST.  
+- **Implementações feitas**:  
+  - Configuração inicial do servidor FastAPI.  
+  - Primeira rota de teste (`/`) retornando mensagem de status.  
+  - Criação da rota `/api/continentes` para listar todos os continentes armazenados no banco.  
+  - Teste bem-sucedido via navegador e Swagger UI.  
+
 ---
 
 ## 🚀 O que ainda será feito
 
-### 4. Banco de Dados (Expansão)
+### Banco de Dados (Expansão)
 - Criar tabelas adicionais: `casos_covid`, `vacinacao`, `regioes`.  
 - Implementar carga incremental dos dados.  
 - Normalizar strings para garantir compatibilidade com UTF‑8.  
 
-### 5. Visualização Avançada (UX/UI)
-- **Ferramentas**: Power BI / Streamlit  
+### API (FastAPI)
+- Criar rota `/api/paises/{continente}` para listar países de um continente.  
+- Criar rota `/api/covid/{pais}` para retornar casos, mortes e recuperados.  
+- Implementar CRUD completo (Create, Read, Update, Delete).  
+- Modularizar o projeto em `database.py`, `crud.py`, `routes.py`.  
+
+### Inteligência Artificial (Planejamento)
+- **Status**: ainda não implementado, mas será parte do pipeline.  
+- **Objetivos futuros**:  
+  - Treinar modelos de previsão de casos e mortes.  
+  - Implementar análise de séries temporais (médias móveis, ARIMA, Prophet).  
+  - Aplicar clustering para identificar padrões entre países.  
+  - Criar rotas na API para expor previsões e insights automáticos.  
+  - Integrar resultados em dashboards interativos.  
+
+### Visualização Avançada (UX/UI)
+-> - **Frontend do Projeto**: [covidDataFlow_Frontend](https://github.com/mozartCuman/covidDataFlow_Frontend) - <-
+- **Ferramentas**: [Power BI](https://powerbi.microsoft.com) / [Streamlit](https://streamlit.io)   
 - **Função**: Dashboards interativos e relatórios.  
 - **Próximos passos técnicos**:  
   - Evolução temporal dos casos (média móvel).  
   - Comparativo entre regiões.  
   - Taxa de vacinação por faixa etária.  
+  - Inclusão de previsões da IA nos dashboards.  
 
 ---
 
 ## 📦 Tecnologias
-- **Python**: Requests, Pandas, SQLAlchemy, Matplotlib  
+- **Python**: Requests, Pandas, SQLAlchemy, Matplotlib, FastAPI  
 - **Banco de Dados**: PostgreSQL  
 - **Visualização**: Power BI / Streamlit  
+- **IA (planejada)**: Scikit-learn, Prophet, técnicas de Machine Learning  
 
 ---
 
@@ -64,10 +89,11 @@
 - Mudança de comportamento no **SQLAlchemy 2.0**, que não aceita mais strings diretas em `conn.execute()`, exigindo o uso de `text()`.  
 - Necessidade de recriar senha e revisar credenciais para evitar problemas de compatibilidade.  
 - Ajustes na integração entre DataFrame e banco para garantir que os dados com acentos fossem gravados corretamente.  
-- **Novo desafio**:  
-  - Execução incorreta dos comandos SQL em bloco único no psql, causando erro de “relação não existe”.  
+- Execução incorreta dos comandos SQL em bloco único no psql, causando erro de “relação não existe”.  
   - Solução: rodar cada `CREATE TABLE` separadamente com ponto e vírgula.  
-  - Verificação com `SELECT` mostrou tabelas criadas mas vazias, confirmando que faltava rodar o script Python para inserir os dados.  
-  - Após rodar o script, dados foram populados com sucesso e a estrutura relacional validada.  
+- Verificação inicial mostrou tabelas criadas mas vazias → confirmado que faltava rodar o script Python para inserir os dados.  
+- Erros ao rodar o FastAPI com `uvicorn` por causa da estrutura de pastas.   
+- Bloqueio de execução de scripts no PowerShell ao ativar o venv → resolvido usando `cmd` ou ajustando `ExecutionPolicy`.  
+- Após ajustes, servidor rodou com sucesso e rota `/api/continentes` foi validada.  
 
 ---
