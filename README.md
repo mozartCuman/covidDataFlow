@@ -49,22 +49,78 @@ Um sistema completo para **coleta, transformação, persistência e disponibiliz
 ---
 
 ## ⚠️ Dificuldades enfrentadas
+
+### Banco e Encoding
 - Conexão e configuração do banco (encoding, credenciais).  
-- Mudanças no SQLAlchemy 2.0 (uso obrigatório de `text()`).  
-- Estrutura das tabelas e dependências de chaves estrangeiras.  
 - Inserção de dados com acentos (UTF‑8).  
+
+### Frameworks
+- Mudanças no SQLAlchemy 2.0 (uso obrigatório de `text()`).  
+
+### Estrutura
+- Execução de múltiplos `CREATE TABLE` em bloco único → erro de dependência.  
 - Organização das pastas para rodar com Uvicorn.  
-- Bloqueio de execução de scripts no PowerShell.  
-- Queries SQL específicas corrigidas (`data_atualizacao`, `c.nome`).  
+
+### Ambiente
+- Bloqueio de execução de scripts no PowerShell ao ativar venv.  
+
+### Queries
+- Coluna inexistente (`d.data`) → corrigida para `d.data_atualizacao`.  
+- Referência incorreta (`c.continente`) → corrigida para `c.nome`.  
+
+### Novas dificuldades enfrentadas
+- Funções duplicadas (`get_continentes`) e imports incorretos (`get_paises_by_continente` antes de existir).  
+- IndexError ao acessar `row[1]` quando a query retornava apenas uma coluna.  
+- Demora na validação automática de merge no GitHub.  
 
 ---
 
 ## 🎯 Aprendizados
-- Validar o **schema do banco** antes de escrever queries.  
-- Acompanhar mudanças em **frameworks** (SQLAlchemy 2.0).  
-- Modularizar o projeto para evitar erros de importação.  
-- Garantir integridade dos dados com atenção ao **encoding**.  
-- Fazer testes incrementais (rota por rota) para identificar falhas rapidamente.  
+
+### Banco de Dados
+- Validar o **schema** antes de escrever queries.  
+- Configurar corretamente o **UTF‑8** para evitar problemas com acentos.  
+
+### Frameworks
+- Acompanhar mudanças em frameworks (SQLAlchemy 2.0).  
+- Uso obrigatório de `text()` em queries SQL.  
+
+### Organização
+- Estrutura modular (`database.py`, `crud.py`, `routes/`) facilita manutenção.  
+- Separar funções com nomes distintos previne conflitos.  
+
+### Desenvolvimento
+- Testar endpoints **um por vez** ajuda a identificar falhas rapidamente.  
+- Conferir o formato do retorno SQL (tupla com uma coluna → usar `row[0]`).  
+
+### Fluxo de Trabalho
+- Documentar bem PRs facilita revisão.  
+- Conhecer alternativas de merge via linha de comando.  
+
+### Boas Práticas
+- Garantir integridade dos dados com encoding correto.  
+- Fazer commits claros e descritivos.  
+- Manter README atualizado com dificuldades e aprendizados.  
+
+---
+
+### 🌐 Exemplos de uso da API
+
+## Status da API
+bash
+curl http://127.0.0.1:8000/status
+
+##Lista de continentes
+bash
+curl http://127.0.0.1:8000/api/continentes
+
+## Países de um continente
+bash
+curl http://127.0.0.1:8000/api/continentes/Asia/paises
+
+## Dados de COVID por país
+bash
+curl http://127.0.0.1:8000/api/covid/Brazil
 
 ---
 
