@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, text
-import pandas as pd
+#import pandas as pd
 from transformation import Transformation
 
 dados_paises = Transformation.dados_paises
