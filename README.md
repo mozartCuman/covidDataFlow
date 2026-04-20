@@ -104,23 +104,23 @@ Um sistema completo para **coleta, transformação, persistência e disponibiliz
 
 ---
 
-### 🌐 Exemplos de uso da API
+## 🌐 Exemplos de uso da API
 
-## Status da API
-bash
-curl http://127.0.0.1:8000/status
+### Status da API
+-bash
+ curl http://127.0.0.1:8000/status
 
-##Lista de continentes
-bash
-curl http://127.0.0.1:8000/api/continentes
+### Lista de continentes
+-bash
+ curl http://127.0.0.1:8000/api/continentes
 
-## Países de um continente
-bash
-curl http://127.0.0.1:8000/api/continentes/Asia/paises
+### Países de um continente
+-bash
+ curl http://127.0.0.1:8000/api/continentes/Asia/paises
 
-## Dados de COVID por país
-bash
-curl http://127.0.0.1:8000/api/covid/Brazil
+### Dados de COVID por país
+-bash
+ curl http://127.0.0.1:8000/api/covid/Brazil
 
 ---
 
