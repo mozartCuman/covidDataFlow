@@ -1,5 +1,9 @@
 # 📊 Pipeline de Dados COVID
 
+Um sistema completo para **coleta, transformação, persistência e disponibilização de dados sobre COVID-19**, integrando **Python, PostgreSQL, FastAPI** e ferramentas de visualização.
+
+---
+
 ## ✅ O que já foi implementado
 
 ### 1. Ingestão (Coleta)
@@ -23,12 +27,13 @@
 - **Ferramenta**: FastAPI + Uvicorn  
 - Endpoints implementados:  
   - `/status` → status da API.  
-  - `/api/continentes` → lista continentes e países.  
+  - `/api/continentes` → lista continentes.  
+  - `/api/continentes/{nome}/paises` → países de um continente.  
   - `/api/covid/{pais}` → dados de COVID por país.  
   - `/api/covid/continente/{nome}` → dados de COVID por continente.  
   - `/api/covid/top/{n}` → top N países com mais casos.  
-  - `/api/covid/resumo_global` → resumo global de casos, mortes e recuperados.  
-  - `/api/covid/evolucao/{pais}` → evolução temporal de um país.  
+  - `/api/covid/resumo_global` → resumo global.  
+  - `/api/covid/evolucao/{pais}` → evolução temporal.  
   - `/api/covid/ranking/{continente}` → ranking de países dentro de um continente.  
 
 ---
@@ -44,35 +49,13 @@
 ---
 
 ## ⚠️ Dificuldades enfrentadas
-
-### 1. Conexão e Configuração do Banco
-- Erros de `UnicodeDecodeError` e credenciais inválidas ao conectar no PostgreSQL.  
-- **Solução**: ajuste da string de conexão, recriação da senha e configuração correta de encoding UTF‑8.  
-
-### 2. Evolução do SQLAlchemy
-- Mudança no SQLAlchemy 2.0, que não aceita mais strings diretas em `conn.execute()`.  
-- **Solução**: uso obrigatório de `text()` para envolver comandos SQL, garantindo compatibilidade.  
-
-### 3. Estrutura das Tabelas
-- Execução de múltiplos `CREATE TABLE` em bloco único no psql → erro de “relação não existe”.  
-- **Solução**: rodar cada comando separadamente com ponto e vírgula, validando dependências de chaves estrangeiras.  
-
-### 4. Inserção e Encoding de Dados
-- Dados com acentos não eram gravados corretamente.  
-- **Solução**: revisão do encoding e normalização de strings para UTF‑8.  
-
-### 5. FastAPI e Estrutura de Pastas
-- Erros ao rodar `uvicorn` devido à organização dos arquivos.  
-- **Solução**: reorganização do projeto em módulos (`database.py`, `routes.py`, etc.), garantindo importações corretas.  
-
-### 6. Ambiente de Desenvolvimento
-- Bloqueio de execução de scripts no PowerShell ao ativar venv.  
-- **Solução**: uso do `cmd` ou ajuste da `ExecutionPolicy`.  
-
-### 7. Queries SQL específicas
-- Coluna inexistente (`d.data`) → corrigida para `d.data_atualizacao`.  
-- Referência incorreta (`c.continente`) → corrigida para `c.nome`.  
-- **Solução**: revisão do schema das tabelas e ajuste das queries.  
+- Conexão e configuração do banco (encoding, credenciais).  
+- Mudanças no SQLAlchemy 2.0 (uso obrigatório de `text()`).  
+- Estrutura das tabelas e dependências de chaves estrangeiras.  
+- Inserção de dados com acentos (UTF‑8).  
+- Organização das pastas para rodar com Uvicorn.  
+- Bloqueio de execução de scripts no PowerShell.  
+- Queries SQL específicas corrigidas (`data_atualizacao`, `c.nome`).  
 
 ---
 
@@ -82,3 +65,29 @@
 - Modularizar o projeto para evitar erros de importação.  
 - Garantir integridade dos dados com atenção ao **encoding**.  
 - Fazer testes incrementais (rota por rota) para identificar falhas rapidamente.  
+
+---
+
+## 🛠️ Instalação e Execução
+
+### Pré-requisitos
+- Python 3.10+  
+- PostgreSQL 14+  
+- Virtualenv (recomendado)  
+
+### Passo a passo
+```bash
+# Clonar o repositório
+git clone https://github.com/seuusuario/CovidDataFlow.git
+cd CovidDataFlow
+
+# Criar ambiente virtual
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
+
+# Instalar dependências
+pip install -r requirements.txt
+
+# Rodar servidor FastAPI
+uvicorn backend.main:app --reload
