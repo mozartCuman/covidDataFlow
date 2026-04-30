@@ -20,7 +20,7 @@ Um sistema completo para **coleta, transformação, persistência e disponibiliz
 ### 3. Banco de Dados (Persistência)
 - **Ferramenta**: PostgreSQL + SQLAlchemy  
 - Criação das tabelas `continentes`, `paises`, `dados_covid` com chaves estrangeiras.  
-- Inserção automática com `ON CONFLICT DO NOTHING`.  
+- Inserção automática.  
 - Pipeline completo: coleta → transformação → persistência.  
 
 ### 4. API (FastAPI)
@@ -35,6 +35,13 @@ Um sistema completo para **coleta, transformação, persistência e disponibiliz
   - `/api/covid/resumo_global` → resumo global.  
   - `/api/covid/evolucao/{pais}` → evolução temporal.  
   - `/api/covid/ranking/{continente}` → ranking de países dentro de um continente.  
+
+### 5. Middleware (Correção de Conexão)
+- **Ferramenta**: FastAPI Middleware  
+- Implementação de middleware para configuração de **CORS**.  
+- Correção do bloqueio de requisições pelo navegador.  
+- Ajuste dos cabeçalhos HTTP (`Access-Control-Allow-Origin`, `Access-Control-Allow-Methods`, `Access-Control-Allow-Headers`).  
+- Resultado: endpoints agora podem ser consumidos pelo front-end sem restrições.
 
 ---
 
@@ -72,6 +79,7 @@ Um sistema completo para **coleta, transformação, persistência e disponibiliz
 - Funções duplicadas (`get_continentes`) e imports incorretos (`get_paises_by_continente` antes de existir).  
 - IndexError ao acessar `row[1]` quando a query retornava apenas uma coluna.  
 - Demora na validação automática de merge no GitHub.  
+- **Bloqueio de conexão pelo navegador** → resolvido com middleware de CORS.  
 
 ---
 
@@ -93,6 +101,11 @@ Um sistema completo para **coleta, transformação, persistência e disponibiliz
 - Testar endpoints **um por vez** ajuda a identificar falhas rapidamente.  
 - Conferir o formato do retorno SQL (tupla com uma coluna → usar `row[0]`).  
 
+### Middleware e Conexão
+- Importância de configurar **CORS** em APIs públicas.  
+- Middleware garante comunicação entre front-end e back-end.  
+- Testar endpoints diretamente no navegador ajuda a identificar bloqueios.  
+
 ### Fluxo de Trabalho
 - Documentar bem PRs facilita revisão.  
 - Conhecer alternativas de merge via linha de comando.  
@@ -106,32 +119,28 @@ Um sistema completo para **coleta, transformação, persistência e disponibiliz
 
 ## 🌐 Exemplos de uso da API
 
-### Status da API
--bash
- curl http://127.0.0.1:8000/status
+```bash
+# Status da API
+curl http://127.0.0.1:8000/status
 
-### Lista de continentes
--bash
- curl http://127.0.0.1:8000/api/continentes
+# Lista de continentes
+curl http://127.0.0.1:8000/api/continentes
 
-### Países de um continente
--bash
- curl http://127.0.0.1:8000/api/continentes/Asia/paises
+# Países de um continente
+curl http://127.0.0.1:8000/api/continentes/Asia/paises
 
-### Dados de COVID por país
--bash
- curl http://127.0.0.1:8000/api/covid/Brazil
+# Dados de COVID por país
+curl http://127.0.0.1:8000/api/covid/Brazil
+```
 
----
+##🛠️ Instalação e Execução
+- Pré-requisitos
+- Python 3.10+
+- PostgreSQL 14+
+- Virtualenv (recomendado)
 
-## 🛠️ Instalação e Execução
+## Passo a passo
 
-### Pré-requisitos
-- Python 3.10+  
-- PostgreSQL 14+  
-- Virtualenv (recomendado)  
-
-### Passo a passo
 ```bash
 # Clonar o repositório
 git clone https://github.com/seuusuario/CovidDataFlow.git
@@ -147,3 +156,5 @@ pip install -r requirements.txt
 
 # Rodar servidor FastAPI
 uvicorn backend.main:app --reload
+```
+
