@@ -13,4 +13,4 @@ def continentes():
 def paises_por_continente(nome: str):
     result = get_paises_by_continente(nome)
     paises = [row[0] for row in result if row[0]]  # extrai só o nome dos países, ignorando nulos
-    return {"continente": nome, "paises": paises}
+    return {"continente": nome, "paises": paises }

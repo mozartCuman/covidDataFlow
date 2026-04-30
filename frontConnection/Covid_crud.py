@@ -1,5 +1,5 @@
 from sqlalchemy import text
-from .database import engine
+from ..backend import engine
 
 def get_covid_by_pais(pais: str):
     with engine.connect() as conn:
